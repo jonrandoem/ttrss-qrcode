@@ -7,6 +7,8 @@ An on-demand QR-Code generator plugin for TTRSS (http://tt-rss.org). The QR-Code
 
 This plugin is licensed under [MIT License](https://github.com/jonrandoem/ttrss-qrcode/blob/master/LICENSE).
 
+This plugin has been tested on the version 1.10 of TTRSS.
+
 
 ###Installation
 
