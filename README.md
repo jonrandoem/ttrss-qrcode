@@ -22,13 +22,6 @@ Installation
 4. Activate the plugin through the configuration area of TTRSS
 
 
-Todo
-----------
-
-- Make the QR codes appear in a dialog instead of generating them inline of the article.
-
-
-
 Credits
 ----------
 
