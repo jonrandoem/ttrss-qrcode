@@ -22,7 +22,7 @@ class QrcodeGen extends Plugin {
 	function hook_article_button($line) {
 		$article_id = $line["id"];
 
-		$rv = "<img src=\"plugins/qrcodegen/qrcode.png\"
+		$rv = "<img src=\"plugins.local/qrcodegen/qrcode.png\"
 			class='tagsPic' style=\"cursor : pointer\"
 			onclick=\"generateQrCode($article_id)\"
 			title='".__('Generate a QR Code')."'>";
@@ -46,7 +46,7 @@ class QrcodeGen extends Plugin {
 			require_once(dirname(__FILE__) . '/phpqrcode/qrlib.php');
 			QRcode::png($article_link, $pngPath);
 		}
-		echo '<div><img src="plugins/qrcodegen/cache/' . $id . '.png" style="display: block; margin: 0 auto;"></div>';
+		echo '<div><img src="plugins.local/qrcodegen/cache/' . $id . '.png" style="display: block; margin: 0 auto;"></div>';
 		echo "<div style='text-align : center'>";
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('qrCodeArticleDlg').hide()\">".__('Close this dialog')."</button>";
 		print "</div>";
