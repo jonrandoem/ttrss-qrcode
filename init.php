@@ -31,14 +31,17 @@ class QrcodeGen extends Plugin {
 	}
 
 	function getQr() {
-		$id = db_escape_string($_REQUEST['id']);
-
+		$id = strip_tags($_REQUEST['id']);
 		$article_link = '';
-		$result = db_query("SELECT title, link
-				FROM ttrss_entries, ttrss_user_entries
-				WHERE id = '$id' AND ref_id = id AND owner_uid = " .$_SESSION['uid']);
-		if (db_num_rows($result) != 0) {
-			$article_link = db_fetch_result($result, 0, 'link');
+
+		$sth = $this->pdo->prepare("SELECT title, link
+			FROM ttrss_entries, ttrss_user_entries
+			WHERE id = :id AND ref_id = id AND owner_uid = :owner_uid");
+		$sth->bindParam(':id', $id);
+		$sth->bindParam(':owner_uid', $_SESSION['uid']);
+		$sth->execute();
+		if ($row = $sth->fetch()) {
+			$article_link = $row['link'];
 		}
 
 		$pngPath = dirname(__FILE__) . '/cache/' . $id . '.png';
