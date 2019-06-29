@@ -9,7 +9,7 @@ function generateQrCode(id) {
 			id = ids.toString();
 		}
 
-		var query = "backend.php?op=pluginhandler&plugin=qrcodegen&method=getQr&id=" + param_escape(id);
+		var query = "backend.php?op=pluginhandler&plugin=qrcodegen&method=getQr&id=" + encodeURIComponent(id);
 		if (dijit.byId("qrCodeArticleDlg")) {
 			dijit.byId("qrCodeArticleDlg").destroyRecursive();
 		}
