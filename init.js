@@ -17,7 +17,7 @@ function generateQrCode(id) {
 		dialog = new dijit.Dialog({
 			id: "qrCodeArticleDlg",
 			title: __("QR code for article"),
-			style: "width: 300px; height: 300px;",
+			style: "width: 215px; height: 215px;",
 			href: query
 		});
 
