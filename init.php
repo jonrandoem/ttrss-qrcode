@@ -22,7 +22,7 @@ class QrcodeGen extends Plugin {
 	function hook_article_button($line) {
 		$article_id = $line["id"];
 
-		$rv = "<img src=\"plugins/qrcodegen/qrcode.png\"
+		$rv = "<img src=\"plugins.local/qrcodegen/qrcode.png\"
 			class='tagsPic' style=\"cursor : pointer\"
 			onclick=\"generateQrCode($article_id)\"
 			title='".__('Generate a QR Code')."'>";
@@ -31,14 +31,17 @@ class QrcodeGen extends Plugin {
 	}
 
 	function getQr() {
-		$id = db_escape_string($_REQUEST['id']);
-
+		$id = strip_tags($_REQUEST['id']);
 		$article_link = '';
-		$result = db_query("SELECT title, link
-				FROM ttrss_entries, ttrss_user_entries
-				WHERE id = '$id' AND ref_id = id AND owner_uid = " .$_SESSION['uid']);
-		if (db_num_rows($result) != 0) {
-			$article_link = db_fetch_result($result, 0, 'link');
+
+		$sth = $this->pdo->prepare("SELECT title, link
+			FROM ttrss_entries, ttrss_user_entries
+			WHERE id = :id AND ref_id = id AND owner_uid = :owner_uid");
+		$sth->bindParam(':id', $id);
+		$sth->bindParam(':owner_uid', $_SESSION['uid']);
+		$sth->execute();
+		if ($row = $sth->fetch()) {
+			$article_link = $row['link'];
 		}
 
 		$pngPath = dirname(__FILE__) . '/cache/' . $id . '.png';
@@ -46,7 +49,7 @@ class QrcodeGen extends Plugin {
 			require_once(dirname(__FILE__) . '/phpqrcode/qrlib.php');
 			QRcode::png($article_link, $pngPath);
 		}
-		echo '<div><img src="plugins/qrcodegen/cache/' . $id . '.png" style="display: block; margin: 0 auto;"></div>';
+		echo '<div><img src="plugins.local/qrcodegen/cache/' . $id . '.png" style="display: block; margin: 0 auto;"></div>';
 		echo "<div style='text-align : center'>";
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('qrCodeArticleDlg').hide()\">".__('Close this dialog')."</button>";
 		print "</div>";

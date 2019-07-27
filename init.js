@@ -9,7 +9,7 @@ function generateQrCode(id) {
 			id = ids.toString();
 		}
 
-		var query = "backend.php?op=pluginhandler&plugin=qrcodegen&method=getQr&id=" + param_escape(id);
+		var query = "backend.php?op=pluginhandler&plugin=qrcodegen&method=getQr&id=" + encodeURIComponent(id);
 		if (dijit.byId("qrCodeArticleDlg")) {
 			dijit.byId("qrCodeArticleDlg").destroyRecursive();
 		}
@@ -17,7 +17,7 @@ function generateQrCode(id) {
 		dialog = new dijit.Dialog({
 			id: "qrCodeArticleDlg",
 			title: __("QR code for article"),
-			style: "width: 300px; height: 300px;",
+			style: "width: 215px; height: 215px;",
 			href: query
 		});
 
